@@ -1,14 +1,14 @@
 exports.wordData = [
   {
-    title: 'Chinese words',
+    title: 'Chinese Words',
     url: 'https://s3.amazonaws.com/encouragingaudiopublicbucket/2.m4a',
   },
   {
-    title: 'English words',
+    title: 'English Words',
     url: 'https://s3.amazonaws.com/encouragingaudiopublicbucket/1.m4a',
   },
   {
-    title: 'Spanish words',
+    title: 'Spanish Words',
     url: 'https://s3.amazonaws.com/encouragingaudiopublicbucket/3.m4a',
   },
 ];
