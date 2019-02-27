@@ -5,32 +5,56 @@
 			"name": "PlayIntent",
 			"phrases": [
 				"Play",
-				"Play words"
-			]
-		},
-		{
-			"name": "PlayTodayIntent",
-			"phrases": [
+				"Play words",
 				"Play today",
 				"Play today's words",
 				"Play words for today"
 			]
 		},
 		{
-			"name": "PlayTomorrowIntent",
-			"phrases": [
-				"Play tomorrow",
-				"Play tomorrow's words",
-				"Play words for tomorrow"
-			]
+    "name": "NextIntent",
+    "alexa": {
+        "name": "AMAZON.NextIntent",
+        "samples": []
+    },
+    "phrases": [
+        "skip",
+        "next",
+        "next one",
+        "skip please",
+        "next one please",
+        "skip this word",
+        "skip to next word",
+        "skip to the next word",
+        "next word",
+        "would like the next word",
+        "I would like the next word",
+        "I would like to listen to the next word"
+    ]
 		},
 		{
-			"name": "PlayYesterdayIntent",
-			"phrases": [
-				"Play yesterday",
-				"Play yesterday's words",
-				"Play words for yesterday"
-			]
+    "name": "PreviousIntent",
+    "alexa": {
+        "name": "AMAZON.PreviousIntent",
+        "samples": []
+    },
+    "phrases": [
+        "go back",
+        "skip back",
+        "back",
+        "back up",
+        "previous word",
+        "go to the previous word",
+        "skip back to previous word",
+        "go back to the previous word",
+        "the previous word",
+        "I'd like to listen to the previous word",
+        "I would like to listen to the previous word",
+        "go back please",
+        "skip back please",
+        "previous word please",
+        "skip back to the previous word please"
+    ]
 		}
 	],
 	"alexa": {
@@ -55,6 +79,30 @@
 					},
 					{
 						"name": "AMAZON.PauseIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.LoopOffIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.LoopOnIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.RepeatIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.ShuffleOffIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.ShuffleOnIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.StartOverIntent",
 						"samples": []
 					}
 				]

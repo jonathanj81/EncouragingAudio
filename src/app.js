@@ -21,41 +21,24 @@ app.use(
 // ------------------------------------------------------------------
 // APP LOGIC
 // ------------------------------------------------------------------
-
-const wordsData = require('./wordsData');
-var currentIndex = 1;
-var currentToken = "";
+const Fetcher = require('./fetch.js');
 
 app.setHandler({
     LAUNCH() {
-        return this.toIntent('PlayIntent');
+      if(this.$user.isNew()){
+        this.tell("Welcome to encouraging word. To begin, say play today's word");
+      }else{
+        this.toIntent('ResumeIntent');
+      }
     },
     PlayIntent() {
-        this.tell("Welcome to encouraging word. For today's words, say play today's words. For tomorrow's words, say play tomorrow's words. For yesterday's words, say play yesterday's words.");
-    },
-    PlayTodayIntent() {
-      currentIndex = 1;
-      currentToken = wordsData.wordData[1].title;
+        let word;
+        word = Fetcher.getFirstWords();
+        let currentIndex = Fetcher.getWordIndex(word);
+        this.$user.$data.currentIndex = currentIndex;
         this.$alexaSkill.$audioPlayer
-            .setOffsetInMilliseconds(0)
-            .play(wordsData.wordData[1].url, currentToken)
-            .tell('English words');
-    },
-    PlayTomorrowIntent() {
-      currentIndex = 2;
-      currentToken = wordsData.wordData[2].title;
-        this.$alexaSkill.$audioPlayer
-            .setOffsetInMilliseconds(0)
-            .play(wordsData.wordData[2].url, currentToken)
-            .tell('Spanish words');
-    },
-    PlayYesterdayIntent() {
-      currentIndex = 0;
-      currentToken = wordsData.wordData[0].title;
-        this.$alexaSkill.$audioPlayer
-            .setOffsetInMilliseconds(0)
-            .play(wordsData.wordData[0].url, wordsData.wordData[0].title)
-            .tell('Chinese words');
+          .setOffsetInMilliseconds(0)
+          .play(word.url,`${currentIndex}`);
     },
     PauseIntent() {
         this.$alexaSkill.$audioPlayer.stop();
@@ -65,27 +48,67 @@ app.setHandler({
         this.tell('Paused!');
     },
     ResumeIntent() {
+      let word = Fetcher.getWord(this.$user.$data.currentIndex);
         this.$alexaSkill.$audioPlayer
             .setOffsetInMilliseconds(this.$user.$data.offset)
-            .play(song, 'token')
+            .play(word.url, `${currentIndex}`)
             .tell('Resuming!');
+    },
+    StartOverIntent() {
+        this.tell('Not implemented');
+    },
+    ShuffleOnIntent() {
+        this.tell('Not implemented');
+    },
+    ShuffleOffIntent() {
+        this.tell('Not implemented');
+    },
+    RepeatIntent() {
+        this.tell('Not implemented');
+    },
+    PreviousIntent() {
+      let currentIndex = this.$user.$data.currentIndex;
+      let previousWord = Fetcher.getPreviousWords(currentIndex);
+      currentIndex = Fetcher.getWordIndex(nextWord);
+      this.$user.$data.currentIndex = currentIndex;
+      this.$alexaSkill.$audioPlayer.setOffsetInMilliseconds(0)
+        .play(previousWord.url, `${currentIndex}`);
+    },
+    NextIntent() {
+        let currentIndex = this.$user.$data.currentIndex;
+        let nextWord = Fetcher.getNextWords(currentIndex);
+        currentIndex = Fetcher.getWordIndex(nextWord);
+        this.$user.$data.currentIndex = currentIndex;
+        this.$alexaSkill.$audioPlayer.setOffsetInMilliseconds(0)
+          .play(nextWord.url, `${currentIndex}`);
+    },
+    LoopOnIntent() {
+        this.tell('Not implemented');
+    },
+    LoopOffIntent() {
+        this.tell('Not implemented');
     },
     AUDIOPLAYER: {
         'AlexaSkill.PlaybackStarted'() {
             console.log('AlexaSkill.PlaybackStarted');
             currentToken = wordsData.wordData[currentIndex].title;
+            this.$user.$data.currentUrl = wordsData.wordData[currentIndex].url;
         },
 
         'AlexaSkill.PlaybackNearlyFinished'() {
             console.log('AlexaSkill.PlaybackNearlyFinished');
-            currentIndex = currentIndex < 2 ? ++currentIndex : 0;
+            let currentIndex = this.$user.$data.currentIndex;
+            let word = Fetcher.getNextWords(currentIndex);
+            let nextIndex = Fetcher.getWordIndex(word);
             this.$alexaSkill.$audioPlayer
-              .setExpectedPreviousToken(currentToken)
-              .enqueue(wordsData.wordData[currentIndex].url, wordsData.wordData[currentIndex].title);
+              .setExpectedPreviousToken(`${currentIndex}`)
+              .enqueue(word.url, `${nextIndex}`);
         },
 
         'AlexaSkill.PlaybackFinished'() {
             console.log('AlexaSkill.PlaybackFinished');
+            let currentIndex = this.$user.$data.currentIndex;
+            this.$user.$data.currentIndex = Fetcher.updateIndex(currentIndex);
         },
 
         'AlexaSkill.PlaybackStopped'() {

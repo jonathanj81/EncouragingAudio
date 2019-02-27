@@ -8,32 +8,19 @@
 					"name": "PlayIntent",
 					"samples": [
 						"Play",
-						"Play words"
-					]
-				},
-				{
-					"name": "PlayTodayIntent",
-					"samples": [
+						"Play words",
 						"Play today",
 						"Play today's words",
 						"Play words for today"
 					]
 				},
 				{
-					"name": "PlayTomorrowIntent",
-					"samples": [
-						"Play tomorrow",
-						"Play tomorrow's words",
-						"Play words for tomorrow"
-					]
+					"name": "AMAZON.NextIntent",
+					"samples": []
 				},
 				{
-					"name": "PlayYesterdayIntent",
-					"samples": [
-						"Play yesterday",
-						"Play yesterday's words",
-						"Play words for yesterday"
-					]
+					"name": "AMAZON.PreviousIntent",
+					"samples": []
 				},
 				{
 					"name": "AMAZON.CancelIntent",
@@ -53,6 +40,30 @@
 				},
 				{
 					"name": "AMAZON.PauseIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.LoopOffIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.LoopOnIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.RepeatIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.ShuffleOffIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.ShuffleOnIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.StartOverIntent",
 					"samples": []
 				}
 			]
